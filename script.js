@@ -1,6 +1,5 @@
 'use strict';
 
-
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const form = document.querySelector('.form');
@@ -13,42 +12,46 @@ const inputElevation = document.querySelector('.form-input-elevation');
 
 let map,mapEvent;
 
+
 // ===========================================================
 
 if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(function(Position){
-      const {latitude} = Position.coords;
-      const {longitude} = Position.coords;
-      console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+  navigator.geolocation.getCurrentPosition(function(Position){
+    const {latitude} = Position.coords;
+    const {longitude} = Position.coords;
+    console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
-    const coords = [latitude,longitude]
+   const coords = [latitude,longitude]
 
-    map = L.map('map').setView(coords, 12);
+   map = L.map('map').setView(coords,15);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      }).addTo(map);
-      
-     
-     map.on('click', (mapE) => {
-         mapEvent = mapE
-        form.classList.remove('hidden');
-        inputDistance.focus();
-   
-    })
+   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-    },function(){
-     alert(`Couldn't get your Position!!`)
-    })
+
+map.on('click', (mapE) => {
+  mapEvent = mapE
+ form.classList.remove('hidden');
+ inputDistance.focus();
+
+})
+
+
+
+  },function(){
+    alert(`Couldn't get your position!!`)
+  })
 }
 
-// -----------------------------------------------
+
+// ----------------------------------------------------------
 
 form.addEventListener('submit' , (e) => {
 
   e.preventDefault();
 
-  inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '' ;
+  inputDistance.value = '' ;
   
 
   const {lat,lng} = mapEvent.latlng;
@@ -66,9 +69,10 @@ form.addEventListener('submit' , (e) => {
       .setPopupContent('Workout!')
       .openPopup();
 
+
 })
 
 inputTypes.addEventListener('change',()=>{
-    inputElevation.closest('.form-row').classList.toggle('form-row-hidden');
-    inputCadence.closest('.form-row').classList.toggle('form-row-hidden');
+  inputElevation.closest('.form-row').classList.toggle('form-row-hidden');
+  inputCadence.closest('.form-row').classList.toggle('form-row-hidden');
 })
