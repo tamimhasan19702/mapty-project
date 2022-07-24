@@ -10,8 +10,6 @@ const inputDuration = document.querySelector('.form-input-duration');
 const inputCadence = document.querySelector('.form-input-cadence');
 const inputElevation = document.querySelector('.form-input-elevation');
 
-let map,mapEvent;
-
 
 // ===========================================================
 
@@ -26,11 +24,7 @@ class App{
     this._getPosition(); 
 
     form.addEventListener('submit' , this._newWorkout.bind(this));
-
-  inputTypes.addEventListener('change',()=>{
-  inputElevation.closest('.form-row').classList.toggle('form-row-hidden');
-  inputCadence.closest('.form-row').classList.toggle('form-row-hidden');
-})
+    inputTypes.addEventListener('change',this._toggleElevationField)
 
   }
 
@@ -80,7 +74,8 @@ class App{
 // ----------------------------------------------------------------  
 
   _toggleElevationField(){
-
+    inputElevation.closest('.form-row').classList.toggle('form-row-hidden');
+    inputCadence.closest('.form-row').classList.toggle('form-row-hidden'); 
   }
 
 // ----------------------------------------------------------------  
