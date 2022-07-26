@@ -24,6 +24,7 @@ class workout {
 }
 
 class Running extends workout{
+  type = 'running';
   constructor(coords,distance,duration,cadence){
     super(coords,distance,duration);
     this,cadence = cadence;
@@ -36,6 +37,7 @@ class Running extends workout{
 }
 
 class Cycling extends workout{
+  type = 'cycling';
   constructor(coords,distance,duration,elevationGain){
     super(coords,distance,duration);
     this,elevationGain = elevationGain;
@@ -186,30 +188,33 @@ class App{
   console.log(this.#workouts);
 
   // render workoutt on map as marker
-
-  
-  
-
-      L.marker({lat,lng}).addTo(this.#map)
-      .bindPopup(
-        L.popup({
-            maxWidth: 250,
-            minWidth:100,
-            autoClose: false,
-            closeOnClick: false,
-            className: 'running-popup'
-        })
-      )
-      .setPopupContent('Workout!')
-      .openPopup();
-
+   
+  this._renderWorkoutMarker(workout) 
 
    // render workout on list
+
+
 
   // hide +  clear input field
 
   inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '' ;
 
+  }
+
+  _renderWorkoutMarker(workout){
+   
+    L.marker(workout.coords).addTo(this.#map)
+    .bindPopup(
+      L.popup({
+          maxWidth: 250,
+          minWidth:100,
+          autoClose: false,
+          closeOnClick: false,
+          className: `${workout.type}-popup`
+      })
+    )
+    .setPopupContent('workout')
+    .openPopup();
   }
 
 }
