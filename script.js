@@ -183,6 +183,8 @@ class App{
  
   this.#workouts.push(workout);
 
+  console.log(this.#workouts);
+
   // render workoutt on map as marker
 
   
