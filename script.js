@@ -356,7 +356,7 @@ _getLocalStorage(){
   })
 }
 
-_reset(){
+reset(){
   localStorage.removeItem('workouts');
   location.reload();
 }
