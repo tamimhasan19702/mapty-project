@@ -80,8 +80,14 @@ class App{
 // ----------------------------------------------------------------
 
   constructor(){
+    // get user location
     this._getPosition(); 
 
+  // get data from local storage
+
+   this._getLocalStorage();
+
+  // attach event listeners
     form.addEventListener('submit' , this._newWorkout.bind(this));
     inputTypes.addEventListener('change',this._toggleElevationField);
     containerWorkouts.addEventListener('click' , this._moveToPopup.bind(this))
@@ -118,7 +124,11 @@ class App{
   }).addTo(this.#map);
   
   
-  this.#map.on('click', this._showForm.bind(this))
+  this.#map.on('click', this._showForm.bind(this));
+
+  this.#workouts.forEach(work => {
+    this._renderWorkoutMarker(work);
+  })
  
   }
 
@@ -230,6 +240,10 @@ class App{
 
   this._hideform();
 
+  // store data
+
+  this._setLocalStorage();
+
   }
 
   // --------------------------------------------------------------
@@ -321,35 +335,29 @@ class App{
   });
 
 
- workout.click();
+//  workout.click();
 
+}
+
+_setLocalStorage(){
+  localStorage.setItem('workouts',JSON.stringify(this.#workouts));
+}
+
+_getLocalStorage(){
+  const data = JSON.parse(localStorage.getItem('workouts'));
+  console.log(data);
+
+  if(!data) return;
+
+  this.#workouts = data;
+
+  this.#workouts.forEach( work => {
+    this._renderWorkout(work);   
+  })
 }
 
 }
 
 const app = new App();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ================================================================
-
-
-// ----------------------------------------------------------
-
 
 
