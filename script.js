@@ -356,6 +356,11 @@ _getLocalStorage(){
   })
 }
 
+_reset(){
+  localStorage.removeItem('workouts');
+  location.reload();
+}
+
 }
 
 const app = new App();
